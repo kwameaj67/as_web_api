@@ -2,45 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ac_web_test_api.Interfaces;
+using ac_web_test_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ac_web_test_api.Controllers
 {
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
-        // GET: api/values
+        private readonly ICustomer _customer;
+        public CustomerController(ICustomer customer)
+        {
+            _customer = customer;
+        }
+        // Customers
+        // POST: api/customer/addCustomer
+        [HttpPost("addCustomer")]
+        public async Task<ActionResult<IEnumerable<Customer>>> AddCustomer([FromBody] Customer customer)
+        {
+            if (customer == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           var newCustomer = await _customer.AddCustomer(customer);
+            return Created("", newCustomer);
+        }
+        // GET: api/customers
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Company>>> GetCustomers()
         {
-            return new string[] { "value1", "value2" };
+            var data = await _customer.GetAllCustomers();
+            return Ok(data);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
