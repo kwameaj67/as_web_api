@@ -3,6 +3,6 @@ namespace ac_web_test_api.Responses
 {
     public class CustomerResponse<T>
     {
-        public T Customers { get; set; }
+        public T customers { get; set; }
     }
 }
