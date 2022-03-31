@@ -2,45 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ac_web_test_api.Interfaces;
+using ac_web_test_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ac_web_test_api.Controllers
 {
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
-        // GET: api/values
+        private readonly IEmployee _employee;
+        public EmployeeController(IEmployee employee)
+        {
+            _employee = employee;
+        }
+        // Employee
+        // POST: api/addEmployee
+        [HttpPost("addEmployee")]
+        public async Task<ActionResult<IEnumerable<Employee>>> AddCustomers([FromBody]Employee employee)
+        {
+            if (employee == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           
+           var newEmployee = await _employee.AddEmployee(employee);
+            return Created("", newEmployee);
+        }
+        // GET: api/data/employees
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var data = await _employee.GetAllEmployees();
+            return Ok(data);
+            //return new string[] { "value1", "value2" };
         }
     }
 }
