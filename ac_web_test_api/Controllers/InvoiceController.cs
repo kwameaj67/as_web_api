@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ac_web_test_api.Interfaces;
+using ac_web_test_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,36 +13,30 @@ namespace ac_web_test_api.Controllers
     [Route("api/[controller]")]
     public class InvoiceController : Controller
     {
-        // GET: api/values
+        private readonly IInvoice _invoice;
+        public InvoiceController(IInvoice invoice)
+        {
+            _invoice = invoice;
+        }
+        // Invoice
+        // POST: api/invoice/addInvoice
+        [HttpPost("addInvoice")]
+        public async Task<ActionResult<IEnumerable<Invoice>>> AddInvoice([FromBody]Invoice invoice)
+        {
+            if (invoice == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var newInvoice = await _invoice.AddInvoice(invoice);
+            return Created("", newInvoice);
+        }
+        // GET: api/invoices
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var data = await _invoice.GetAllInvoices();
+            return Ok(data);
         }
     }
 }
