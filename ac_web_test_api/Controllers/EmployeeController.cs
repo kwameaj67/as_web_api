@@ -30,7 +30,7 @@ namespace ac_web_test_api.Controllers
            var newEmployee = await _employee.AddEmployee(employee);
             return Created("", newEmployee);
         }
-        // GET: api/data/employees
+        // GET: 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {

@@ -29,7 +29,7 @@ namespace ac_web_test_api.Controllers
            var newCustomer = await _customer.AddCustomer(customer);
             return Created("", newCustomer);
         }
-        // GET: api/customers
+        // GET: 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> GetCustomers()
         {

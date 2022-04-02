@@ -31,7 +31,7 @@ namespace ac_web_test_api.Controllers
             var newInvoice = await _invoice.AddInvoice(invoice);
             return Created("", newInvoice);
         }
-        // GET: api/invoices
+        // GET: 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices()
         {
