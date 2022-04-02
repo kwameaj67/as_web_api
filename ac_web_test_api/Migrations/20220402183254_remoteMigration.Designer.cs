@@ -9,8 +9,8 @@ using ac_web_test_api.AppDbContext;
 namespace ac_web_test_api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20220328163351_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220402183254_remoteMigration")]
+    partial class remoteMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
