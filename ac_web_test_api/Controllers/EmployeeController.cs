@@ -36,7 +36,6 @@ namespace ac_web_test_api.Controllers
         {
             var data = await _employee.GetAllEmployees();
             return Ok(data);
-            //return new string[] { "value1", "value2" };
         }
     }
 }
