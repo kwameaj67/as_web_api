@@ -22,7 +22,7 @@ Use Visual Studio (Windows or Mac)
 ## Database 🔖
 
 PostgreSql ❤️
-Note: Database is deployed on Azure.
+Note: Database is deployed on Azure(cloud).
 
 
 ## Install Nuget Packages
@@ -31,7 +31,7 @@ To install packages run this command `npm install`
 
 ## Run App 
 
-Run this app using `npm start`
+Start app with or without debugging.
 
 ### Check live API_URL 
 Click [Documentation](https://remote-api.azurewebsites.net/index.html)
