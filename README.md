@@ -27,7 +27,7 @@ Note: Database is deployed on Azure(cloud).
 
 ## Install Nuget Packages
 
-To install packages run this command `npm install`
+To install packages run this command `dotnet install`
 
 ## Run App 
 
